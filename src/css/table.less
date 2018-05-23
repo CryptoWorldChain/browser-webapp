@@ -1,0 +1,75 @@
+.table-list{
+    border:none;
+    .ivu-table:after{
+        width:0px;
+    }
+    .ivu-table:before{
+        height:0px;
+    }
+    table{
+        width:100% !important;
+    }
+    .ivu-table-header{
+        .ivu-table-cell{
+            font-family:Arial-BoldMT;
+            font-size:14px;
+            color:#969ca1;
+        }
+    }
+    .ivu-table-body .ivu-table-cell{
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
+        color:#9eeff3;
+        font-weight: 600;
+    }
+    .ivu-table td {
+        background-color: #002134;
+    }
+    .ivu-table th, .ivu-table td{
+        border-bottom:1px solid #3b4b54;
+    }
+    .ivu-table-body tr:last-child td{
+        border:none;
+    }
+    .ivu-table-body .text-color .ivu-table-cell{
+        color:#969ca1 !important;
+    }
+    
+}
+
+.inside-table{
+    border:1px solid;
+    border-color:#3b4b54 !important;
+
+    .ivu-table:after{
+        // width:1px;
+        background: #3b4b54;
+    }
+    .ivu-table:before{
+        // height:1px;
+        background: #3b4b54;
+    }
+    .ivu-table{
+        // overflow: visible;
+        height:100%;
+        background-color: #002134;
+        .ivu-table-header {
+            overflow: visible;
+        }
+    }
+    .ivu-table-body{
+        background: #002134;
+        max-height:200px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    .ivu-table th{
+        height:35px !important;
+        font-size:12px;
+    } 
+    .ivu-table td{
+        height:30px;
+        font-size:12px;
+    }
+}
