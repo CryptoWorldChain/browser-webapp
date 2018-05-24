@@ -265,7 +265,7 @@ function init() {
     })();
   }
   initParticles();
-  // initEarth();
+  initEarth();
 }
 export default {
   components:{
