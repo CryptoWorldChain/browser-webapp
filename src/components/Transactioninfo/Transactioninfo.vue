@@ -126,7 +126,7 @@ import {Message} from "../message/message.js";
                         key: 'txHash',
                     },
                     {
-                        name:"Block Height:",
+                        name:"Block Height",
                         key: 'blockHeight',
                     },
                     {
