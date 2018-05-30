@@ -81,6 +81,9 @@ export default {
   methods:{
     initData (status) {
       this.spinner.start();
+      if (!status) {
+        status = this.$route.query.status;
+      }
       axios.post('/block/adi/pbgns.do').then((res) => {
         this.spinner.stop();
         console.log('node node node list',res,res.data);

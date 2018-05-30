@@ -450,7 +450,7 @@ export default {
     position: absolute;
     top: 80px;
     right: 20px;
-    width: 320px;
+    width: 340px;
     border: 1px solid #3b4b54;
     z-index: 999;
     .block-title {
@@ -501,7 +501,7 @@ export default {
           .block-item-hash {
             display: inline-block;
             vertical-align: middle;
-            width: 108px;
+            width: 105px;
           }
         }
       }
