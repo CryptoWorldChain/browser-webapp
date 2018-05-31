@@ -253,7 +253,7 @@ import {Message} from "../message/message.js";
                         that.blockinfo = res.data.transaction;
                         // alert(that.blockinfo.status);
                         if (that.blockinfo.status == 'null') {
-                            that.blockinfo.status = 'peding';
+                            that.blockinfo.status = 'pending';
                         }
                         that.data_to = res.data.transaction.tos;
                         that.data_from = res.data.transaction.froms;

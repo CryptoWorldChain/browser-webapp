@@ -1,9 +1,21 @@
 <template>
-    <div class="block-list wrapper">
-        <Table class="table-list" :columns="columns1" :data="blocks"></Table>
-        <div class="pager">
-            <div class="pager-inner">
-                <Page :total="totalPage" @on-change="changePage"/>
+    <div class="block-list">
+        <div class="nav-block">
+          <div class="nav-block-inner wrapper clear">
+            <div class="float-left">
+              Blocks
+            </div>
+            <div class="float-right">
+              <router-link :to="{path:'/'}">home</router-link> / Blocks
+            </div>
+          </div>
+        </div>
+        <div class="wrapper">
+            <Table class="table-list" :columns="columns1" :data="blocks"></Table>
+            <div class="pager">
+                <div class="pager-inner">
+                    <Page :total="totalPage" @on-change="changePage"/>
+                </div>
             </div>
         </div>
     </div>

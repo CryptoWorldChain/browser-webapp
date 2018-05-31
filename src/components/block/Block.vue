@@ -118,7 +118,7 @@ import bus from '../bus/bus';
                     return false;
                 }
                 this.spinner.start();
-                if(this.$route.query.block){
+                if(this.$route.query.block || this.$route.query.block == '0'){
                     axios({
                         method:"post",
                         url:"/block/blk/pbghe.do",
