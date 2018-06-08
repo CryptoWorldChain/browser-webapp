@@ -78,7 +78,7 @@ html body {
 	margin: 0 auto;
 }
 .header-main .bg-earth {
-	width: 100%;
+	width: 90%;
 	height: 420px;
 	position: absolute;
 	top: 65px;
@@ -93,7 +93,7 @@ html body {
 	opacity: 0.85;
 }
 .bg-move-wrapper {
-	width: 100%;
+	width: 90%;
 	height: 400px;
 	position: absolute;
 	top: 50px;
@@ -203,7 +203,7 @@ html body {
 	width: 420px;
 	height: 420px;
 	border-radius: 50%;
-	border: 1px solid rgba(60,101,125,.6);
+	border: 2px solid rgba(60,101,125,.7);
 	margin: 0 auto;
 }
 .bg-center-wrapper {
@@ -249,12 +249,14 @@ html body {
 	width: 100%;
 	top: 210px;
 	left:0;
+	font-size: 18px;
+	font-weight: 600;
 }
 /*点线*/
 @keyframes ani-line {
 	0%{
 		opacity: 0;
-		width: 0%;
+		width: 0;
 	}
 	100% {
 		opacity: 1;
@@ -265,7 +267,8 @@ html body {
 	position:absolute;
 	z-index: 6;
 	display: inline-block;
-	animation: ani-line 2s ease-in-out;
+	animation: ani-line 1s linear;
+	opacity: 0.6;
 }
 .line-item1 {
 	transform: rotate(30deg);
@@ -290,6 +293,35 @@ html body {
 	top: 350px;
 	left: 650px;
 	width: 120px;
+}
+.line-item5 {
+	transform: rotate(20deg);
+	top: 200px;
+	left: 180px;
+	width: 260px;
+	opacity: .6;
+}
+.line-item6,.line-item7,.line-item8 {
+	transform: rotate(180deg);
+	transform-origin: right;
+}
+.line-item6 {
+	top: 80px;
+	left: 250px;
+	width: 230px;
+	opacity: .6;
+}
+.line-item7 {
+	top: 200px;
+	left: 400px;
+	width: 160px;
+	opacity: .6;
+}
+.line-item8 {
+	top: 320px;
+	left: 260px;
+	width: 230px;
+	opacity: .6;
 }
 .line {
 	width: 100%;

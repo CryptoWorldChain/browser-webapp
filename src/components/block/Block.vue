@@ -25,10 +25,18 @@
                     <span :class="item.key=='parentHash'|| item.key=='txCount'?'span-click':''" 
                         @click="item.key=='parentHash'|| item.key=='txCount'?onClicks(blockinfo,item.key):''"
                     >
-                        <span v-show="item.key =='height' && blockinfo[item.key] >= 0" @click="Another(blockinfo[item.key]-1)" style="margin-right:20px;" class="button_span"> Prev </span>
+                        <span v-show="item.key =='height' && blockinfo[item.key] >= 0" @click="Another(blockinfo[item.key]-1)" style="margin-right:20px;" :class="{button_span:true,disabled: blockinfo.height == 0}"> Prev </span>
                         <span v-show="item.key =='timestamp'" >{{ timeago().format(blockinfo[item.key]) }}</span>
-                        <span v-show="item.key !='timestamp'" >{{blockinfo[item.key]}}</span>
+                        <span v-show="item.key != 'address' && item.key != 'reward'">{{blockinfo[item.key]}}</span>
                         <span style="margin-left:20px;" @click="Another(blockinfo[item.key]+1)" v-show="item.key =='height'" class="button_span"> Next </span>
+                        <span v-show="item.key == 'address'">
+                            <router-link  class="link" style="color: #9eeff3;" :to="{path: '/address/' + blockinfo['address']}">
+                                {{blockinfo['address']}}
+                            </router-link>
+                        </span>
+                        <span v-show="item.key == 'reward'">
+                            {{ blockinfo[item.key] }}
+                        </span>
                     </span>
                 </p>
             </div>
@@ -69,8 +77,12 @@ import bus from '../bus/bus';
                         key: 'parentHash',
                     },
                     {
-                        name:"Coinbase",
-                        key: 'coinbase',
+                        name:"Mined By",
+                        key: 'address',
+                    },
+                    {
+                        name: "Reward",
+                        key: "reward"
                     }
                 ],
                 blockinfo:{
@@ -131,19 +143,23 @@ import bus from '../bus/bus';
                             if(res.data.block.header){
                                 that.blockinfo = res.data.block.header;
                                 that.blockinfo.txCount = that.blockinfo.txCount + ' transactions';
+                                if (that.blockinfo.miner && that.blockinfo.miner.address) {
+                                    that.blockinfo.address = that.blockinfo.miner.address
+                                }
+                                that.blockinfo.reward = parseFloat(that.blockinfo.reward) ? parseFloat(that.blockinfo.reward): '0';
                             }else{
-                                Message.error("暂无区块信息",3)
+                                Message.error("Unable to locate block",3)
                             }
                             // if(res.data.block.body && res.data.block.body.transactions){
                             //     that.txcountinfo=res.data.block.body.transactions;
                             // }
                             
                         }else {
-                            that.message.error('没有获取到区块详情');
+                            that.message.error('Unable to locate block');
                         }
                     }).catch((err) => {
                         this.spinner.stop();
-                        that.message.error('没有获取到区块详情');
+                        that.message.error('Unable to locate block');
                     })
                 }else if(this.$route.query.blockHash){
                     axios({
@@ -163,6 +179,10 @@ import bus from '../bus/bus';
                             if(res.data.block.body && res.data.block.body.transactions){
                                 that.txcountinfo=res.data.block.body.transactions;
                             }
+                            if (that.blockinfo.miner && that.blockinfo.miner.address) {
+                                that.blockinfo.address = that.blockinfo.miner.address
+                            }
+                            that.blockinfo.reward = parseFloat(that.blockinfo.reward) ? parseFloat(that.blockinfo.reward): '0';
                         }
                     }).catch((err)=>{
                         this.spinner.stop();
@@ -197,8 +217,11 @@ import bus from '../bus/bus';
             },
             Another(val){
                 // console.log(val);
+                if (val < 0) {
+                    return;
+                }
                 if (val > this.lastBlock.height) {
-                    this.message.warning('已经是最新区块。');
+                    this.message.warning('Unable to locate block '+ val);
                     return false;
                 }
                 this.$router.push({path: '/block',query:{
@@ -251,6 +274,9 @@ import bus from '../bus/bus';
                   text-align: center;
                   background: #002134;
                   color: #9eeff3;
+                  &.disabled {
+                    opacity: .5;
+                  }
                 }
                 .button_span:hover{
                   cursor:pointer;

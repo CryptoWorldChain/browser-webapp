@@ -109,11 +109,11 @@ export default {
             })
           }
         }else {
-          this.message.error('获取节点出错，请检查网络或者稍后重试');
+          this.message.error('Unable to get nodes');
         }
       }).catch((err) => {
         this.spinner.stop();
-        this.message.error('获取节点出错，请检查网络或者稍后重试');
+        this.message.error('connection failed, please try again later');
       })
     }
   }

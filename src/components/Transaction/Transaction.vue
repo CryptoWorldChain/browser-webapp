@@ -10,7 +10,7 @@
             </div>
           </div>
         </div>
-        <TableInfo :params="params"/>
+        <TableInfo :params="params" />
     </div>
 </template>
 <script>
@@ -42,17 +42,17 @@ import {Message} from "../message/message.js";
                     this.spinner.stop();
                     console.log(res)
                     if(res.status=="200" && res.data && res.data.block){
-                        
                         if(res.data.block.body && res.data.block.body.transactions){
                             that.params=res.data.block.body.transactions;
                         }else{
-                            Message.error("区块暂无交易信息",3)
+                            // Message.error("区块暂无交易信息",3)
                         }
-                        
+                    } else {
+                        Message.warning('no transactions')
                     }
                 }).catch((err) => {
                     this.spinner.stop();
-                    Message.error("区块暂无交易信息",3)
+                    Message.error("connection failed",3)
                 })
             }
         }

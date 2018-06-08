@@ -151,9 +151,7 @@
                 axios.post('/block/blk/pbgbb.do',{pageSize,pageNo}).then((res) => {
                     this.spinner.stop();
                     if (res.status == 200 && res.data.retCode == 1 && res.data.blocks && res.data.blocks.length) {
-                        if (!this.totalPage) {
-                            this.totalPage = res.data.blocks[0].header.height;
-                        }
+                        this.totalPage = res.data.totalCount;
                         this.blocks = res.data.blocks.map((item,index)=>{
                             var block = item.header;
                             var now = new Date().getTime();
@@ -165,11 +163,13 @@
                             }
                             return block;
                         });
+                    }else {
+                        this.message.warning('Unable to locate block')
                     }
                 }).catch((err) => {
                     this.spinner.stop();
                     console.log('errr',err);
-                    this.message.error('网络请求错误，请稍后重试');
+                    this.message.error('connection failed, please try again later');
                 })
             },
             changePage (pageNo) {

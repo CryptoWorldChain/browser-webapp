@@ -13,11 +13,11 @@
     <div class="wrapper address-detail">
       <Row>
         <Col span="24">
-          <div class="color-gray"><span>Balance: </span>{{balance}}</div>
+          <div class="color-gray"><span>Balance: </span><span style="color: #9eeff3; font-size: 16px;">{{balance}}</span></div>
         </Col>
-        <Col span="24">
+        <!-- <Col span="24">
           <span>USD Value: </span>{{usdBalance}}
-        </Col>
+        </Col> -->
         <Col span="24">
           <div class="color-gray"><span>Transctions: </span>{{data.length}}</div>
         </Col>
@@ -167,11 +167,11 @@ export default {
           that.balance = res.data.address.balance;
           that.data = res.data.address.transactions;
         }else {
-          this.message.error('没有获取到地址详情，请检查地址是否正确');
+          this.message.error('connection failed,please try again later');
         }
       }).catch((err) => {
         this.spinner.stop();
-        this.message.error('没有获取到地址详情，请检查网络后重试');
+        this.message.error('connection failed,please try again later');
         console.log('address error',err);
       })
       this.data = [

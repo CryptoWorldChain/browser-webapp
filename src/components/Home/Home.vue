@@ -28,12 +28,11 @@
           <div class="bg-circle-wrapper3">
             <div class="bg-circle3"></div>
           </div>
-          <div id="num" style="font-size: 16px;">
-            <countTo  v-if="!isMounted" :startVal='0' :endVal='block.height' :duration='3000'></countTo>
-            <div v-else>{{block.height}}</div>
+          <div id="num">
+            <countTo  :startVal='old_block' :separator="','" :endVal='best_block' :duration='3000'></countTo>
           </div>
-          <!-- <div>
-            <div class="coin-item coin-item1"></div>
+          <div>
+            <!-- <div class="coin-item coin-item1"></div>
             <div class="coin-item coin-item2"></div>
             <div class="coin-item coin-item3"></div>
             <div class="coin-item coin-item4"></div>
@@ -60,37 +59,65 @@
               <div class="circle">
                 <div class="dot"></div>
               </div>
+            </div> -->
+            <div class="line-item line-item6">
+              <div class="line"></div>
+              <div class="circle">
+                <div class="dot"></div>
+              </div>
             </div>
-          </div> -->
+            <div class="line-item line-item7">
+              <div class="line"></div>
+              <div class="circle">
+                <div class="dot"></div>
+              </div>
+            </div>
+            <div class="line-item line-item8">
+              <div class="line"></div>
+              <div class="circle">
+                <div class="dot"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>      
       <div class="latest-block">
-        <h4 class="color-yellow">BEST BLOCK</h4>
-        <div class="block">Block Height {{block.height}}</div>
-        <div>Current Hash: 
+        <div class="line-item line-item5">
+              <div class="line"></div>
+              <div class="circle">
+                <div class="dot"></div>
+              </div>
+            </div>
+        <h5 class="color-yellow" style="margin-bottom: 10px;">BEST BLOCK</h5>
+        <div class="block latest-block-item"><span class="latest-block-item-title">Block Height:</span> {{block.height}}</div>
+        <div class="latest-block-item">
+          <div class="latest-block-item-title">Current Hash: </div>
           <Tooltip :class="'hash-tooltip'" :content="block.blockHash">
-            <router-link :to="{path:'/block?blockHash='+block.blockHash}" class="ellipsis">{{block.blockHash}}</router-link>
+            <router-link :to="{path:'/block?blockHash='+block.blockHash}" class="ellipsis">{{'[ ' + sliceStr(block.blockHash,10) + ' ]'}}</router-link>
           </Tooltip>
         </div>
-        <div>Parent Hash:
+        <div class="latest-block-item">
+          <div class="latest-block-item-title">Parent Hash:</div>
           <Tooltip :class="'hash-tooltip'" :content="block.parentHash">
-            <router-link :to="{path:'/block?blockHash='+block.parentHash}" class="ellipsis">{{block.parentHash}}</router-link>
+            <router-link :to="{path:'/block?blockHash='+block.parentHash}" class="ellipsis">{{'[ ' + sliceStr(block.parentHash,10) + ' ]'}}</router-link>
           </Tooltip>
         </div>
-        <div>Mined By: 
+        <div class="latest-block-item">
+          <div class="latest-block-item-title">Mined By: </div>
           <Tooltip :class="'hash-tooltip'" :content="minerAddress">
-            <router-link :to="{path:'/address/'+minerAddress}" class="ellipsis">{{minerAddress}}</router-link>
+            <router-link :to="{path:'/address/'+minerAddress}" class="ellipsis">{{'[ ' + sliceStr(minerAddress,6) + ' ]'}}</router-link>
           </Tooltip>
         </div>
-        <div style="line-height: 2em;">Reward: {{accountBalance}}</div>
-        <div>
-          <div class="float-left" style="width: 78px;">Nodes: </div>
-          <div class="float-left" style="max-height: 300px;overflow-y: auto;">
-            <div class="f12" v-for="(item,index) in nodes" :key="item+index">{{item}}</div>
-          </div>
+        <div class="latest-block-item" style="line-height: 1em;"><span class="latest-block-item-title">Reward:</span> {{reward}}</div>
+        <div class="latest-block-item">
+          <div class="latest-block-item-title" style="width: 78px;">Node: </div>
+          <div>{{'[ ' + (block.miner && block.miner.node) ? (block.miner && block.miner.node) : ''  + ' ]'}}</div>
+          <!-- <div class="" style="max-height: 300px;overflow-y: auto;">
+            <div style="14px; line-height: 14px;" class="f12" v-for="(item,index) in nodes" :key="item+index">{{item}}</div>
+          </div> -->
         </div>
       </div>
-      <div class="recent-blocks">
+      <!-- <div class="recent-blocks">
         <div class="block-title clear">
           <div class="blocks-text">Blocks</div>
           <div class="view-all" @click="toBlocks">View All</div>
@@ -111,6 +138,48 @@
             </div>
           </div>
         </div>
+      </div> -->
+      <div class="recent-blocks clear">
+        <div class="view-all" @click="toBlocks">View All</div>
+        <ul>
+          <li class="block-item color-b6f3f7 clear" :class="{animated:true,'slideInDown': slideDown}" v-for="(item) of recentThreeBlocks" :key="item.height">
+            <div class="float-left block-item-left">
+              <h3 class="block-item-height color-yellow">
+                <router-link  class="color-yellow" :to="{name:'Block',query:{block: item.height}}">
+                  [ {{item.height}} ]
+                </router-link>
+              </h3>
+              <div class="ellipsis">
+                bcuid: {{item.miner.bcuid ? sliceStr(item.miner.bcuid) : ''}}
+              </div>
+              <div class="ellipsis">
+                timestamp: {{item.age}}
+              </div>
+              <div class="block-item-txns ellipsis">
+                <router-link :to="{name: 'Transaction', query:{height: item.height}}">
+                  txn: {{item.txCount}} {{item.txCount> 1 ?'transactions' : 'transaction'}}
+                </router-link>
+              </div>
+              <div class="ellipsis">
+                avg tx time: {{item.avetx + ' ms'}}
+              </div>
+            </div>
+            <div class="float-left block-item-right">
+              <div class="block-item-right-inner clear ellipsis">
+                <div class="float-left  ellipsis block-item-coin-address">{{sliceStr(item.coin_address,3)}}</div>
+                <div class="float-left block-item-reward ellipsis">{{parseFloat(item.reward) ? parseFloat(item.reward) : '0'}}</div>
+                <div class="float-left block-item-hash">
+                  <div class="ellipsis block-item-block-hash">
+                    <router-link :to="{name: 'Block',query: {blockHash: item.blockHash}}">{{sliceStr(item.blockHash)}}</router-link>
+                  </div>
+                  <div class="ellipsis block-item-parent-hash">
+                    <router-link :to="{name: 'Block',query: {blockHash: item.parentHash}}">{{sliceStr(item.parentHash)}}</router-link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
     <div class="header-bottom">
@@ -123,7 +192,29 @@
 import { Tooltip } from 'iview';
 import countTo from 'vue-count-to';
 import Bar from './Bar';
+import { refreshInterval } from '@/constant/constant'; 
+import bus from '@/components/bus/bus'
 var particles;
+function sliceStr(str,length) {
+  var result = '';
+  if (!str) {
+    return result;
+  }
+  str = str.toString();
+  var len = str.length;
+  if (len > length * 2) {
+    result = str.slice(0,length) + '......' + str.slice(-1*length)
+  } else if (len <= 8 ) {
+    result = str;
+  }else if (len <= 12) {
+    result = str.slic(0,4) + '......' + str.slice(-4)
+  }else if ( len <= 20 ) {
+    result = str.slice(0,5) + '......' + str.slice(-5)
+  }else {
+    result = str.slice(0,6) + '......' + str.slice(-6)
+  }
+  return result;
+}
 function init() {
   function initParticles () {
     particles = Particles.init({
@@ -271,8 +362,9 @@ export default {
   components:{
     countTo,Bar,Tooltip
   },
-  data () {
+  data() {
     return {
+      old_block: 0,
       blockChanged:true,//区块高度是否改变
       slideDown:true,
       endVal:0,
@@ -290,9 +382,11 @@ export default {
   watch: {
     'block': function (val,oldVal) {
       var that = this;
-      that.slideDown = false;
+      this.slideDown = false;
       if (oldVal && val) {
-        console.log(val,oldVal);
+        if (oldVal.height) {
+          this.old_block = oldVal.height;
+        }
         if (oldVal.height == val.height) {
           setTimeout(() => {
             that.blockChanged = false;
@@ -313,23 +407,53 @@ export default {
     this.interval();
   },
   computed: {
-    minerAddress () {
+    best_block() {
       var block = this.block;
-      if (block.miner && block.miner.address.length) {
-        return block.miner.address[0]
+      if (block.height) {
+        return block.height;
+        // return this.accounting.formatNumber(block.height)
+      }else {
+        return 0;
       }
     },
-    accountBalance () {
+    minerAddress () {
       var block = this.block;
-      if (block.miner && block.miner.balance != undefined) {
-        return block.miner.balance;
+      if (block.miner && block.miner.bcuid) {
+        return block.miner.bcuid;
+      } else {
+        return '';
+      }
+    },
+    reward () {
+      var block = this.block;
+      if (block.miner && block.miner.reward != undefined) {
+        return this.accounting.formatNumber(block.miner.reward);
       }
     },
     nodes () {
       var block = this.block;
       if (block.nodes) {
         return block.nodes;
+      } else {
+        return [];
       }
+    },
+    recentThreeBlocks () {
+      var recent = this.recentBlocks;
+      var recentThree = [];
+      if (recent.length) {
+        recentThree = recent.filter((item, index) => {
+          console.log(item,'--------',index);
+          if (index <= 3 && index >=1) {
+            if(item.miner && item.miner.address) {
+              item.coin_address = item.miner.address
+            }
+            return item;
+          }
+        })
+      }
+      console.log(recentThree);
+      return recentThree;
     }
   },
   destroyed (){
@@ -342,6 +466,7 @@ export default {
     }
   },
   methods:{
+    sliceStr,
     initCoin () {
       function initCoinType(){
         var arr = ['BTC','ETH','BCH','XRP'];
@@ -369,6 +494,7 @@ export default {
       }).then((res) => {
         if (res.status == 200 && res.data.retCode == 1) {
           this.block = res.data.block.header;
+          bus.$emit('getLastBlock',res.data.block.header)
           this.isMounted = true;
         } 
       }).catch((err) => {
@@ -395,6 +521,34 @@ export default {
       }).catch((err) => {
         console.log('errr',err);
       })
+      // 模拟数据
+      // var arr = [];
+      // for (let i = 0;i<4;i ++ ) {
+      //   var obj = {
+      //       "header": {
+      //         "parentHash": "c4e47fce11a8439963bc6340930cebddeea4fcc8bb872ec2a9f7fcb596b4bf37",
+      //         "timestamp": 1527949206346,
+      //         "height": 116288,
+      //         "reward": "00000006",
+      //         "blockHash": "b736a1b6e8cfd8be416d21d9116508497fe1272c9a49e482a61f781866f4713e",
+      //         "txCount": 0,
+      //         "sliceId": 0,
+      //         "age": '2 days ago',
+      //         "coin_address": 'djflsxjffjdjfjdsfjldljfldfdsfs',
+      //         "miner": {
+      //             "bcuid": "fjldsjflddddfsfdfsfdjfldjfl",
+      //             "nonce": 0,
+      //             "balance": 6,
+      //             "address": [
+      //                 "DaImw96kiHle7nC0WeLNNnO8FukEa"
+      //             ]
+      //         }
+      //       }
+      //     }
+      //   obj.header.height = 234 + i;
+      //   arr.push(obj.header)
+      // }
+      // this.recentBlocks = arr;
     },
     toBlocks () {
       this.$router.push({
@@ -402,14 +556,14 @@ export default {
       })
     },
     toblock (height) {
-      if (height) {
+      if (height || height == 0) {
         this.$router.push({
           path:'/block',
           query:{
             block:height
           }
         })
-      }else {
+      } else {
         console.log('没有height数据');
       }
     },
@@ -417,7 +571,7 @@ export default {
       this.timer = setInterval (() => {
         this.initLatest();
         this.initRecentBlk();
-      },2000);
+      },refreshInterval);
     }
   }
 }
@@ -425,15 +579,28 @@ export default {
 
 <style lang="less" scoped>
   .latest-block {
+    .ivu-tooltip {
+      display: block;
+      height: 14px;
+      line-height: 14px;
+    }
     position: absolute;
     top: 100px;
-    left: 100px;
+    left: 80px;
     // width: 300px;
+    padding: 15px;
+    background: rgba(60, 101, 125, 0.1);
     z-index: 999;
+    color: #b6f3f7;
+    .latest-block-item{
+      margin-bottom: 8px;
+      .latest-block-item-title {
+        font-weight: 600;
+        color: #b6f3f7;
+      }
+    }
     .block {
-      font-size: 16px;
-      height: 30px;
-      line-height: 30px;
+      font-size: 12px;
     }
     h4 {
       padding: 10px 0;
@@ -441,26 +608,78 @@ export default {
     a {
       display: inline-block;
       vertical-align: middle;
-      line-height: 2em;
+      line-height: 1.2em;
       width: 240px;
       color: #9eeff3;
     }
   }
+  // .recent-blocks {
+  //   position: absolute;
+  //   top: 80px;
+  //   right: 20px;
+  //   width: 340px;
+  //   border: 1px solid #3b4b54;
+  //   z-index: 999;
+  //   .block-title {
+  //     padding: 10px;
+  //     border-bottom: 1px solid #3b4b54;
+  //   }
+  //   .blocks-text {
+  //     line-height: 28px;
+  //     float: left;
+  //   }
+  //   .view-all {
+  //     float: right;
+  //     border: 1px solid #fff;
+  //     width: 80px;
+  //     line-height: 28px;
+  //     text-align: center;
+  //     cursor: pointer;
+  //     &:hover {
+  //       background: rgba(60, 101, 125, .9);
+  //       border-color: rgba(60, 101, 125, 0.9);
+  //       color: #fff;
+  //     }
+  //   }
+  //   .block-inner {
+  //     min-height: 200px;
+  //     max-height: 400px;
+  //     overflow-y: auto;
+  //     .block-item {
+  //       padding: 10px;
+  //       border-bottom: 1px solid #3b4b54;
+  //     }
+  //     .block-height {
+  //       width: 120px;
+  //       height: 50px;
+  //       line-height: 50px;
+  //       background:rgba(60,101,125,.6);
+  //       color: #fff;
+  //       text-align: center;
+  //       cursor: pointer;
+  //       &:hover {
+  //         text-decoration: underline;
+  //       }
+  //     }
+  //     .block-info {
+  //       p {
+  //         height: 24px;
+  //         line-height: 24px;
+  //         padding-left: 20px;
+  //         color: #999;
+  //         a {
+  //           color: #9eeff3;
+  //         }
+  //         .block-item-hash {
+  //           display: inline-block;
+  //           vertical-align: middle;
+  //           width: 105px;
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
   .recent-blocks {
-    position: absolute;
-    top: 80px;
-    right: 20px;
-    width: 340px;
-    border: 1px solid #3b4b54;
-    z-index: 999;
-    .block-title {
-      padding: 10px;
-      border-bottom: 1px solid #3b4b54;
-    }
-    .blocks-text {
-      line-height: 28px;
-      float: left;
-    }
     .view-all {
       float: right;
       border: 1px solid #fff;
@@ -468,40 +687,77 @@ export default {
       line-height: 28px;
       text-align: center;
       cursor: pointer;
-    }
-    .block-inner {
-      min-height: 200px;
-      max-height: 400px;
-      overflow-y: auto;
-      .block-item {
-        padding: 10px;
-        border-bottom: 1px solid #3b4b54;
-      }
-      .block-height {
-        width: 120px;
-        height: 50px;
-        line-height: 50px;
-        background:rgba(60,101,125,.6);
+      position: relative;
+      z-index: 99;
+      &:hover {
+        background: rgba(60, 101, 125, 0.2);
+        border:1px solid rgba(60, 101, 125, 0.3);
         color: #fff;
-        text-align: center;
+      }
+    }
+    position: absolute;
+    top: 110px;
+    right: 2%;
+    width: 460px;
+    border: none;
+    z-index: 999;
+    .block-item {
+      padding-bottom: 10px;
+      .block-item-left {
+        width: 160px;
+      }
+      .block-item-height {
+        font-weight: 600;
         cursor: pointer;
         &:hover {
           text-decoration: underline;
+          a {
+            color: rgb(228, 157, 72);
+          }
         }
       }
-      .block-info {
-        p {
-          height: 24px;
-          line-height: 24px;
-          padding-left: 20px;
-          color: #999;
+      .block-item-txns {
+        a {
+          color: #9eeff3;
+        }
+        & a:hover {
+          text-decoration: underline;
+        }
+      }
+      .block-item-right {
+        background: rgba(60, 101, 125, 0.2);
+        width: 290px;
+        margin-top: 20px;
+        padding: 2px 2px;
+        margin-left: 8px;
+        .block-item-coin-address {
+          width: 90px;
+          padding: 0 4px;
+          min-height: 40px;
+        }
+        .block-item-reward {
+          width: 50px;
+          font-size: 18px;
+          padding: 0 4px;
+          color: #EB9938;
+          line-height: 40px;
+        }
+        .block-item-coin-address {
+          line-height: 40px;
+        }
+        .block-item-hash {
+          width: 140px;
+          padding: 0 4px;
+          .block-item-block-hash,.block-item-parent-hash {
+            height: 16px;
+            line-height: 16px;
+            margin-bottom:4px;
+          }
           a {
             color: #9eeff3;
-          }
-          .block-item-hash {
-            display: inline-block;
-            vertical-align: middle;
-            width: 105px;
+            &:hover {
+              text-decoration: underline;
+            }
           }
         }
       }

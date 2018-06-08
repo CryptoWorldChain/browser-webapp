@@ -10,7 +10,7 @@
                 <p class="latest-block-value link" style="cursor: pointer;">#{{latest_block}}</p>
                 <div class="clear">
                   <span class="float-left color-yellow f12">MINER</span>
-                  <span class="float-right color-red">172.16.12.3</span>
+                  <span style="width: 120px;" class="float-right color-red ellipsis">{{block.miner && block.miner.bcuid}}</span>
                 </div>
               </div>
             </div>
@@ -27,7 +27,7 @@
             <div class="col-2 top-item">
               <div class="top-item-inner">
                 <h4>AVG BLOCK TIME</h4>
-                <p>{{header.avgBlockTime}} s</p>
+                <p>{{header.avgBlockTime ? header.avgBlockTime : '0'}} s</p>
                 <div class="clear">
                   <span class="float-left color-yellow f12">LAST BLOCK</span>
                   <span class="float-right color-red">{{last_block_time}}</span>
@@ -61,7 +61,7 @@
             <div class="col-2 top-item">
               <div class="top-item-inner">
                 <h4>AVG TX TIME</h4>
-                <p>{{header.confirm ? header.confirm + ' s' : '' + ' s'}}</p>
+                <p>{{header.confirm ? header.confirm + ' s' : '0' + ' s'}}</p>
               </div>
             </div>
             <!-- <div class="col-2 top-item">
@@ -83,14 +83,15 @@
 
 <script>
 import bus from '../bus/bus';
+import { refreshInterval } from '@/constant/constant'
 export default {
   data () {
     return {
       height:'',
-      block_time:0.02,
-      tps:'400',
-      nodes:200,
-      dpos:12,
+      block_time: '',
+      tps:'0',
+      nodes:0,
+      dpos:0,
       block:{
 
       },
@@ -104,6 +105,11 @@ export default {
   },
   created (){
     var that = this;
+    bus.$on('getLastBlock',function (block) {
+      if (block && block.height) {
+        that.block = block;
+      }
+    })
   },
   mounted () {
     this.initLatest();
@@ -178,7 +184,7 @@ export default {
       setInterval (() => {
         this.initLatest();
         this.getHeaderInfo();
-      },1000);
+      },refreshInterval);
     },
     getHeaderInfo () {
       // this.spinner.start();

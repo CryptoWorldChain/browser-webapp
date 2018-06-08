@@ -65,7 +65,7 @@ import {Message} from "../message/message.js";
             return {
                 columns1: [
                     {
-                        title: '节点名称',
+                        title: 'Node Name',
                         key: 'name',
                         // className:"iiii"
                     },
@@ -258,11 +258,11 @@ import {Message} from "../message/message.js";
                         that.data_to = res.data.transaction.tos;
                         that.data_from = res.data.transaction.froms;
                     }else{
-                        Message.error("区块详情查询失败",3)
+                        Message.error("connection failed",3)
                     }
                 }).catch((err) => {
                     this.spinner.stop();
-                    Message.error("区块详情查询失败",3)
+                    Message.error("connection failed",3)
                 })
             },
             onClicks(val,key){

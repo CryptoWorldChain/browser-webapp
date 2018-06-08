@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { refreshInterval } from '@/constant/constant'
 export default {
   data () {
     return {
@@ -37,7 +38,7 @@ export default {
     }
   },
   mounted (){
-    // this.init();
+    this.init();
     this.initData();
     this.changeChart();
   },
@@ -134,7 +135,7 @@ export default {
       let that = this;
       this.timer = setInterval(()=>{
         that.initData();
-      },3000);
+      },refreshInterval * 4);
     },
     reInit () {
       
