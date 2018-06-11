@@ -13,7 +13,7 @@ module.exports = {
     proxyTable: {
       // jack's macbook
       '/block': {
-        target:'http://192.168.10.27:8000/fbs',
+        target:'http://192.168.10.22:8000/fbs',
         pathRewrite: {'^/block': ''}
       }
       // '/block': {

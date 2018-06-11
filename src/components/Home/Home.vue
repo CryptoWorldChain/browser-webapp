@@ -93,19 +93,20 @@
         <div class="latest-block-item">
           <div class="latest-block-item-title">Current Hash: </div>
           <Tooltip :class="'hash-tooltip'" :content="block.blockHash">
-            <router-link :to="{path:'/block?blockHash='+block.blockHash}" class="ellipsis">{{'[ ' + sliceStr(block.blockHash,10) + ' ]'}}</router-link>
+            <router-link :to="{path:'/block?blockHash='+block.blockHash}" class="ellipsis link">{{'[ ' + sliceStr(block.blockHash,10) + ' ]'}}</router-link>
           </Tooltip>
         </div>
         <div class="latest-block-item">
           <div class="latest-block-item-title">Parent Hash:</div>
           <Tooltip :class="'hash-tooltip'" :content="block.parentHash">
-            <router-link :to="{path:'/block?blockHash='+block.parentHash}" class="ellipsis">{{'[ ' + sliceStr(block.parentHash,10) + ' ]'}}</router-link>
+            <router-link :to="{path:'/block?blockHash='+block.parentHash}" class="ellipsis link">{{'[ ' + sliceStr(block.parentHash,10) + ' ]'}}</router-link>
           </Tooltip>
         </div>
         <div class="latest-block-item">
           <div class="latest-block-item-title">Mined By: </div>
           <Tooltip :class="'hash-tooltip'" :content="minerAddress">
             <router-link :to="{path:'/address/'+minerAddress}" class="ellipsis">{{'[ ' + sliceStr(minerAddress,6) + ' ]'}}</router-link>
+            <!-- <span  style="display: block; max-width: 280px; font-size: 12px;" class="ellipsis">{{minerAddress}}</span> -->
           </Tooltip>
         </div>
         <div class="latest-block-item" style="line-height: 1em;"><span class="latest-block-item-title">Reward:</span> {{reward}}</div>
@@ -150,7 +151,7 @@
                 </router-link>
               </h3>
               <div class="ellipsis">
-                bcuid: {{item.miner.bcuid ? sliceStr(item.miner.bcuid) : ''}}
+                bcuid: {{item.miner.bcuid ? sliceStr(item.miner.bcuid,5) : ''}}
               </div>
               <div class="ellipsis">
                 timestamp: {{item.age}}
@@ -418,8 +419,8 @@ export default {
     },
     minerAddress () {
       var block = this.block;
-      if (block.miner && block.miner.bcuid) {
-        return block.miner.bcuid;
+      if (block.miner && block.miner.address) {
+        return block.miner.address;
       } else {
         return '';
       }

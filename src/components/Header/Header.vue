@@ -10,7 +10,7 @@
                 <p class="latest-block-value link" style="cursor: pointer;">#{{latest_block}}</p>
                 <div class="clear">
                   <span class="float-left color-yellow f12">MINER</span>
-                  <span style="width: 120px;" class="float-right color-red ellipsis">{{block.miner && block.miner.bcuid}}</span>
+                  <span style="width: 120px;" class="float-right color-red ellipsis">{{block.miner && block.miner.address}}</span>
                 </div>
               </div>
             </div>
