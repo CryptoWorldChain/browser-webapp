@@ -28,7 +28,7 @@
           <div class="bg-circle-wrapper3">
             <div class="bg-circle3"></div>
           </div>
-          <div id="num">
+          <div id="num" :class="{active: blockChanged}">
             <countTo  :startVal='old_block' :separator="','" :endVal='best_block' :duration='3000'></countTo>
           </div>
           <div>

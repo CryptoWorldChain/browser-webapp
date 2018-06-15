@@ -21,22 +21,22 @@
             </div>
             <div class="infomation">
                 <p v-for="(item,index) in height_title" :key="index">
-                    <span class="sp1">{{ item.name}} :</span>
-                    <span :class="item.key=='parentHash'|| item.key=='txCount'?'span-click':''" 
-                        @click="item.key=='parentHash'|| item.key=='txCount'?onClicks(blockinfo,item.key):''"
-                    >
-                        <span v-show="item.key =='height' && blockinfo[item.key] >= 0" @click="Another(blockinfo[item.key]-1)" style="margin-right:20px;" :class="{button_span:true,disabled: blockinfo.height == 0}"> Prev </span>
-                        <span v-show="item.key =='timestamp'" >{{ timeago().format(blockinfo[item.key]) }}</span>
-                        <span v-show="item.key != 'address' && item.key != 'reward'">{{blockinfo[item.key]}}</span>
-                        <span style="margin-left:20px;" @click="Another(blockinfo[item.key]+1)" v-show="item.key =='height'" class="button_span"> Next </span>
-                        <span v-show="item.key == 'address'">
-                            <router-link  class="link" style="color: #9eeff3;" :to="{path: '/address/' + blockinfo['address']}">
-                                {{blockinfo['address']}}
-                            </router-link>
-                        </span>
-                        <span v-show="item.key == 'reward'">
-                            {{ blockinfo[item.key] }}
-                        </span>
+                  <span class="sp1">{{ item.name}} :</span>
+                  <span :class="item.key=='parentHash'|| item.key=='txCount'?'span-click':''" 
+                      @click="item.key=='parentHash'|| item.key=='txCount'?onClicks(blockinfo,item.key):''"
+                  >
+                      <span v-show="item.key =='height' && blockinfo[item.key] >= 0" @click="Another(blockinfo[item.key]-1)" style="margin-right:20px;" :class="{button_span:true,disabled: blockinfo.height == 0}"> Prev </span>
+                      <span v-show="item.key =='timestamp'" >{{ timeago().format(blockinfo[item.key]) }}</span>
+                      <span v-show="item.key != 'address' && item.key != 'reward'">{{blockinfo[item.key]}}</span>
+                      <span style="margin-left:20px;" @click="Another(blockinfo[item.key]+1)" v-show="item.key =='height'" class="button_span"> Next </span>
+                      <span v-show="item.key == 'address'">
+                          <router-link  class="link" style="color: #9eeff3;" :to="{path: '/address/' + blockinfo['address']}">
+                              {{blockinfo['address']}}
+                          </router-link>
+                      </span>
+                      <span v-show="item.key == 'reward'">
+                          {{ blockinfo[item.key] }}
+                      </span>
                     </span>
                 </p>
             </div>
@@ -126,7 +126,7 @@ import bus from '../bus/bus';
                 // this.initLatest();
                 let that=this;
                 if (this.$route.query.block > this.lastBlock.height) {
-                    this.message.warning('已经是最新区块。');
+                    this.message.warning('Unable to locate block ' + this.$route.query.block);
                     return false;
                 }
                 this.spinner.start();

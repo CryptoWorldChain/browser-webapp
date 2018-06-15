@@ -12,17 +12,17 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       // jack's macbook
-      '/block': {
-        target:'http://192.168.10.22:8000/fbs',
-        pathRewrite: {'^/block': ''}
-      }
       // '/block': {
-      //   target:'http://23.248.169.78:38000/fbs',
+      //   target:'http://192.168.10.22:8000/fbs',
       //   pathRewrite: {'^/block': ''}
       // }
+      '/block': {
+        target:'http://23.248.169.78:38000/fbs',
+        pathRewrite: {'^/block': ''}
+      },
       // '/block': {
-      //   target: 'http://47.98.53.185:8000/fbs',
-      //   pathRewrite: {'^/block' : ''}
+      //   target: 'http://13.251.40.91:8001/fbs',
+      //   pathRewrite: {'^/block': ''}
       // }
     },
     // Various Dev Server settings

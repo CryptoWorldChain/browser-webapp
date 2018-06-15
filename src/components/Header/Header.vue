@@ -5,12 +5,12 @@
         <div class="container-fluid items">
           <div class="row">
             <div class="col-2 top-item">
-              <div class="top-item-inner"  @click="toblock">
+              <div class="top-item-inner">
                 <h4>BEST BLOCK</h4>
-                <p class="latest-block-value link" style="cursor: pointer;">#{{latest_block}}</p>
+                <p  @click="toblock" class="latest-block-value link" style="cursor: pointer;">#{{latest_block}}</p>
                 <div class="clear">
                   <span class="float-left color-yellow f12">MINER</span>
-                  <span style="width: 120px;" class="float-right color-red ellipsis">{{block.miner && block.miner.address}}</span>
+                  <span @click="toAddress($event,block.miner && block.miner.address)" style="cursor: pointer;width: 120px;" class="float-right color-red ellipsis link">{{block.miner && block.miner.address}}</span>
                 </div>
               </div>
             </div>
@@ -127,6 +127,9 @@ export default {
       var now = new Date().getTime();
       if (time) {
         var age = Math.floor((now - time)/1000);
+        if (age < 0) {
+          age = 0;
+        }
         if (age < 10) {
           return age + 's ago';
         }
@@ -137,6 +140,9 @@ export default {
       var header = this.header;
       var last_block_time = this.last_block_time;
       var time = parseFloat(header.avgBlockTime) - parseFloat(last_block_time);
+      if (time <= 0 ) {
+        time = 0;
+      }
       return time ? Number(time).toFixed(2) : '';
     },
     avg_block_time () {
@@ -199,6 +205,17 @@ export default {
         this.spinner.stop();
         // this.message.error('网络请求貌似出问题了，请稍后重试');
         console.log('get header failed',err);
+      })
+    },
+    toAddress(e,address) {
+      if (!address) {
+        return
+      }
+      this.$router.push({
+        name: 'Address',
+        params:{
+          address
+        }
       })
     }
   }

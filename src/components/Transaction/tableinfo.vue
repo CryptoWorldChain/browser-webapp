@@ -23,6 +23,7 @@ import {Table,Page} from "iview";
                     {
                         title: 'TxHash',
                         key: 'txHash',
+                        className: 'link',
                         render: (h, params) => {
                             return h('a',{
                                 on: {
@@ -36,6 +37,7 @@ import {Table,Page} from "iview";
                     {
                         title: 'Block',
                         key: 'blockHeight',
+                        className: 'link',
                         render: (h, params) => {
                             return h('a',{
                                 on: {
