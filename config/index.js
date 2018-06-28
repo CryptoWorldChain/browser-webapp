@@ -11,13 +11,8 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      // jack's macbook
-      // '/block': {
-      //   target:'http://192.168.10.22:8000/fbs',
-      //   pathRewrite: {'^/block': ''}
-      // }
       '/block': {
-        target:'http://23.248.169.78:38000/fbs',
+        target:'http://ta100.icwv.co:38000/fbs',
         pathRewrite: {'^/block': ''}
       },
       // '/block': {

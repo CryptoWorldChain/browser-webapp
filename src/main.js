@@ -6,12 +6,15 @@ import router from './router'
 var accounting = require("accounting");
 import moment from 'moment'
 import timeago from 'timeago.js';
-import iView from 'iview';
+import {locale} from 'iview';
 import './my-theme/index.less';
 import './css/table.less';
 import {LoadingBar} from "iview";
 import { Message } from "./components/message/message";
 import { Spinner } from './components/message/spin';
+import lang from 'iview/dist/locale/en-US';
+
+locale(lang)
 Vue.component('LoadingBar',LoadingBar);
 
 var spinner = (function () {
@@ -32,7 +35,6 @@ var spinner = (function () {
   }
   return spin;
 })();
-// Vue.use(iView);
 Vue.config.productionTip = false
 
 Vue.prototype.accounting = accounting;

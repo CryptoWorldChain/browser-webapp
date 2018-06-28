@@ -143,7 +143,7 @@ export default {
       if (time <= 0 ) {
         time = 0;
       }
-      return time ? Number(time).toFixed(2) : '';
+      return time ? Number(time).toFixed(2) : 0;
     },
     avg_block_time () {
       var time = this.block_time;

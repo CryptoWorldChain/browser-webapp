@@ -27,7 +27,7 @@
                   >
                       <span v-show="item.key =='height' && blockinfo[item.key] >= 0" @click="Another(blockinfo[item.key]-1)" style="margin-right:20px;" :class="{button_span:true,disabled: blockinfo.height == 0}"> Prev </span>
                       <span v-show="item.key =='timestamp'" >{{ timeago().format(blockinfo[item.key]) }}</span>
-                      <span v-show="item.key != 'address' && item.key != 'reward'">{{blockinfo[item.key]}}</span>
+                      <span v-show="item.key != 'address' && item.key != 'reward' && item.key != 'timestamp'">{{blockinfo[item.key]}}</span>
                       <span style="margin-left:20px;" @click="Another(blockinfo[item.key]+1)" v-show="item.key =='height'" class="button_span"> Next </span>
                       <span v-show="item.key == 'address'">
                           <router-link  class="link" style="color: #9eeff3;" :to="{path: '/address/' + blockinfo['address']}">

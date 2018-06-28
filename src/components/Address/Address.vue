@@ -164,8 +164,8 @@ export default {
       axios.post('/block/adr/pbgad.do',{address}).then((res) => {
         this.spinner.stop();
         if (res.status == 200 && res.data && res.data.retCode == 1 && res.data.address) {
-          that.balance = res.data.address.balance;
-          that.data = res.data.address.transactions;
+          that.balance = res.data.address.balance || 0;
+          that.data = res.data.address.transactions || [];
         }else {
           this.message.error('connection failed,please try again later');
         }

@@ -142,12 +142,13 @@
       </div> -->
       <div class="recent-blocks clear">
         <div class="view-all" @click="toBlocks">View All</div>
-        <ul>
-          <li class="block-item color-b6f3f7 clear" :class="{animated:true,'slideInDown': slideDown}" v-for="(item) of recentThreeBlocks" :key="item.height">
+        <ul class="recent-block-list">
+          <!-- {<li class="block-item color-b6f3f7 clear" :class="{animated:true,'slideInDown': slideDown, 'zoomIn': slideDown && !index}" v-for="(item,index) of recentThreeBlocks" :key="item.height">} -->
+          <li class="block-item color-b6f3f7 clear" v-for="(item) of recentThreeBlocks" :key="item.height">  
             <div class="float-left block-item-left">
               <h3 class="block-item-height color-yellow">
                 <router-link  class="color-yellow" :to="{name:'Block',query:{block: item.height}}">
-                  [ {{item.height}} ]
+                  [ {{ item.height }} ]
                 </router-link>
               </h3>
               <div class="ellipsis">
@@ -158,7 +159,7 @@
               </div>
               <div class="block-item-txns ellipsis">
                 <router-link :to="{name: 'Transaction', query:{height: item.height}}">
-                  txn: {{item.txCount}} {{item.txCount> 1 ?'transactions' : 'transaction'}}
+                  txn: {{item.txCount}} {{item.txCount > 1 ?'transactions' : 'transaction'}}
                 </router-link>
               </div>
               <div class="ellipsis">
@@ -366,12 +367,12 @@ export default {
   data() {
     return {
       old_block: 0,
-      blockChanged:true,//区块高度是否改变
-      slideDown:true,
-      endVal:0,
-      block:{height:0},
+      blockChanged: true,//区块高度是否改变
+      slideDown: true,
+      endVal: 0,
+      block:{ height:0 },
       recentBlocks:[],
-      isMounted:false,
+      isMounted: false,
       timer: null
     }
   },
@@ -445,7 +446,7 @@ export default {
       if (recent.length) {
         recentThree = recent.filter((item, index) => {
           console.log(item,'--------',index);
-          if (index <= 3 && index >=1) {
+          if (index <= 4) {
             if(item.miner && item.miner.address) {
               item.coin_address = item.miner.address
             }
@@ -700,8 +701,10 @@ export default {
     top: 110px;
     right: 2%;
     width: 460px;
+    height: 560px;
+    overflow: hidden;
     border: none;
-    z-index: 999;
+    z-index: 9999999;
     .block-item {
       padding-bottom: 10px;
       .block-item-left {
@@ -762,6 +765,28 @@ export default {
           }
         }
       }
+    }
+  }
+  .recent-block-list {
+    transform: translateY(-250px);
+    animation: recent 5s  1s ease-out both infinite;
+  }
+  @keyframes recent {
+    0% {
+      opacity: .3;
+    }
+    10% {
+      opacity: 1;
+    }
+    80% {
+      transform: translateY(0px);
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      opacity: .3;
+      transform: translateY(0px);
     }
   }
   @media screen and (min-width: 1640px){
