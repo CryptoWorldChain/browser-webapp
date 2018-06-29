@@ -29,7 +29,7 @@
             <div class="bg-circle3"></div>
           </div>
           <div id="num" :class="{active: blockChanged}">
-            <countTo  :startVal='old_block' :separator="','" :endVal='best_block' :duration='3000'></countTo>
+            <countTo  :startVal='old_block' :separator="','" :endVal='best_block' :duration='6000'></countTo>
           </div>
           <div>
             <!-- <div class="coin-item coin-item1"></div>
