@@ -81,7 +81,7 @@
           </div>
         </div>
       </div>      
-      <div class="latest-block">
+      <div class="latest-block animated" :class="{zoomIn:slideDown}">
         <div class="line-item line-item5">
               <div class="line"></div>
               <div class="circle">
@@ -221,9 +221,9 @@ function init() {
   function initParticles () {
     particles = Particles.init({
       selector: '.bg-particles',
-      maxParticles:15,
+      maxParticles:20,
       sizeVariations:3,
-      speed:0.2,
+      speed:.6,
       color:'#f1f1f1',
       minDistance:500,
       connectParticles:true
@@ -587,7 +587,7 @@ export default {
       line-height: 14px;
     }
     position: absolute;
-    top: 100px;
+    top: 150px;
     left: 80px;
     // width: 300px;
     padding: 15px;
@@ -682,6 +682,7 @@ export default {
   //   }
   // }
   .recent-blocks {
+    // border: 1px solid #f00;
     .view-all {
       float: right;
       border: 1px solid #fff;
@@ -699,11 +700,10 @@ export default {
     }
     position: absolute;
     top: 110px;
-    right: 2%;
+    right: 6%;
     width: 460px;
     height: 560px;
     overflow: hidden;
-    border: none;
     z-index: 9999999;
     .block-item {
       padding-bottom: 10px;
@@ -775,7 +775,7 @@ export default {
     0% {
       opacity: .3;
     }
-    10% {
+    15% {
       opacity: 1;
     }
     80% {
