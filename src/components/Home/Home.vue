@@ -397,8 +397,13 @@ export default {
         }else {
           this.blockChanged = true;
           that.slideDown = true;
+          setTimeout(() => {
+            that.blockChanged = false;
+            that.slideDown = false;
+          },3000);
         }
       }
+      console.log(oldVal.height,val.height,this.slideDown,'--------slidedown--------')
     }
   },
   mounted () {
