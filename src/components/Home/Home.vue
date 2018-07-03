@@ -81,7 +81,7 @@
           </div>
         </div>
       </div>      
-      <div class="latest-block animated" :class="{zoomIn:slideDown}">
+      <div class="latest-block animated" :class="{zoomIn:slideDown,zoomOut: !slideDown}">
         <div class="line-item line-item5">
               <div class="line"></div>
               <div class="circle">
@@ -223,7 +223,7 @@ function init() {
       selector: '.bg-particles',
       maxParticles:20,
       sizeVariations:3,
-      speed:.6,
+      speed: .8,
       color:'#f1f1f1',
       minDistance:500,
       connectParticles:true
@@ -390,20 +390,19 @@ export default {
           this.old_block = oldVal.height;
         }
         if (oldVal.height == val.height) {
-          setTimeout(() => {
-            that.blockChanged = false;
-            that.slideDown = false;
-          }, 1000);
+          this.slideDown = true;
         }else {
           this.blockChanged = true;
           that.slideDown = true;
           setTimeout(() => {
             that.blockChanged = false;
             that.slideDown = false;
-          },3000);
+          }, 4000);
         }
+      }else {
+        this.slideDown = true;
       }
-      console.log(oldVal.height,val.height,this.slideDown,'--------slidedown--------')
+      console.log(this.slideDown,'--------slidedown--------')
     }
   },
   mounted () {
@@ -450,7 +449,6 @@ export default {
       var recentThree = [];
       if (recent.length) {
         recentThree = recent.filter((item, index) => {
-          console.log(item,'--------',index);
           if (index <= 4) {
             if(item.miner && item.miner.address) {
               item.coin_address = item.miner.address
@@ -495,10 +493,14 @@ export default {
       initType();
     },
     initLatest () {
+      let that = this;
       axios({
         method:'post',
         url:'/block/blk/pbgtb.do'
       }).then((res) => {
+        setTimeout(() => {
+          that.slideDown = true;
+        }, 5500);
         if (res.status == 200 && res.data.retCode == 1) {
           this.block = res.data.block.header;
           bus.$emit('getLastBlock',res.data.block.header)
@@ -506,12 +508,12 @@ export default {
         } 
       }).catch((err) => {
         console.warn('err',err);
+        this.slideDown = true;
         // this.block = {};
       })
     },
     initRecentBlk () {
       axios.post('/block/blk/pbgbb.do',{pageSize:10,pageNo:1}).then((res) => {
-        console.log('-------------',res);
         if (res.status == 200 && res.data.retCode == 1 && res.data.blocks) {
           this.recentBlocks = res.data.blocks.map((item,index)=>{
             var block = item.header;
@@ -705,7 +707,7 @@ export default {
     }
     position: absolute;
     top: 110px;
-    right: 6%;
+    right: 5%;
     width: 460px;
     height: 560px;
     overflow: hidden;
