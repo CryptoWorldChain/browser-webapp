@@ -126,19 +126,24 @@ export default {
       var last = new Date(time);
       var now = new Date().getTime();
       if (time) {
-        var age = Math.floor((now - time)/1000);
+        var age = ((now - time)/1000);
         if (age < 0) {
           age = 0;
         }
         if (age < 10) {
-          return age + 's ago';
+          return age.toFixed(2) + 's ago';
         }
       }
       return this.timeago().format(last);
     },
     next_block_time () {
       var header = this.header;
-      var last_block_time = this.last_block_time;
+      var last_block = this.block.timestamp;
+      var now = new Date().getTime();
+      var last_block_time = 0;
+      if (last_block) {
+        last_block_time = (now - last_block)/1000;
+      }
       var time = parseFloat(header.avgBlockTime) - parseFloat(last_block_time);
       if (time <= 0 ) {
         time = 0;

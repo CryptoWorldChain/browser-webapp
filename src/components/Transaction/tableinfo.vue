@@ -23,7 +23,7 @@ import {Table,Page} from "iview";
                     {
                         title: 'TxHash',
                         key: 'txHash',
-                        className: 'link',
+                        className: 'link ellipsis',
                         render: (h, params) => {
                             return h('a',{
                                 on: {

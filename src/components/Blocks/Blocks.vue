@@ -37,6 +37,7 @@
                         title: 'height',
                         key: 'height',
                         className:'link',
+                        width: 150,
                         render: (h, params) => {
                             return h('a',{
                                 on: {
@@ -51,6 +52,7 @@
                         title:'Block Hash',
                         key:'blockHash',
                         className:'link',
+                        width: 540,
                         render: (h,params) => {
                             return h('a',{
                                 on:{
