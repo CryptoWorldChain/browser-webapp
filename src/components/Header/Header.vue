@@ -185,7 +185,7 @@ export default {
       }).then((res) => {
         if (res.status == 200 && res.data.retCode == 1 && res.data.block) {
           this.block = res.data.block.header;
-          bus.$emit('getLastBlock',res.data.block.header);
+          // bus.$emit('getLastBlock',res.data.block.header);
         } 
       }).catch((err) => {
         console.warn('err',err);

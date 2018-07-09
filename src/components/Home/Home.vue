@@ -411,6 +411,7 @@ export default {
     this.initCoin();
     this.initRecentBlk();
     this.interval();
+    this.initInterval();
   },
   computed: {
     best_block() {
@@ -471,6 +472,11 @@ export default {
     }
   },
   methods:{
+    initInterval() {
+      setInterval(()=>{
+        window.location.reload();
+      },1000*60*3);
+    },
     sliceStr,
     initCoin () {
       function initCoinType(){
