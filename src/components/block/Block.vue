@@ -146,7 +146,7 @@ import bus from '../bus/bus';
                                 if (that.blockinfo.miner && that.blockinfo.miner.address) {
                                     that.blockinfo.address = that.blockinfo.miner.address
                                 }
-                                that.blockinfo.reward = parseFloat(that.blockinfo.reward) ? parseFloat(that.blockinfo.reward): '0';
+                                that.blockinfo.reward = parseFloat(that.blockinfo.miner.reward) || 0;
                             }else{
                                 Message.error("Unable to locate block",3)
                             }

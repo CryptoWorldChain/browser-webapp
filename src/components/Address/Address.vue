@@ -157,13 +157,14 @@ export default {
       if (this.$route.params.address) {
         this.address = this.$route.params.address
       }else {
+        this.spinner.stop();
         return;
       }
       var address = this.address;
       // address = '30cf53ea6787a84903a3c2ef250054a3abd129ab97';
       axios.post('/block/adr/pbgad.do',{address}).then((res) => {
         this.spinner.stop();
-        if (res.status == 200 && res.data && res.data.retCode == 1 && res.data.address) {
+        if (res.data && res.data.retCode == 1 && res.data.address) {
           that.balance = res.data.address.balance || 0;
           that.data = res.data.address.transactions || [];
         }else {

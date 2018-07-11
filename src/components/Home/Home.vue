@@ -169,7 +169,7 @@
             <div class="float-left block-item-right">
               <div class="block-item-right-inner clear ellipsis">
                 <div class="float-left  ellipsis block-item-coin-address">{{sliceStr(item.coin_address,3)}}</div>
-                <div class="float-left block-item-reward ellipsis">{{parseFloat(item.reward) ? parseFloat(item.reward) : '0'}}</div>
+                <div class="float-left block-item-reward ellipsis">{{parseFloat(item.miner.reward) || '0'}}</div>
                 <div class="float-left block-item-hash">
                   <div class="ellipsis block-item-block-hash">
                     <router-link :to="{name: 'Block',query: {blockHash: item.blockHash}}">{{sliceStr(item.blockHash)}}</router-link>

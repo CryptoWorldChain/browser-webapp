@@ -117,7 +117,7 @@
                         className:"text-color",
                         key: 'reward',
                         render:(h,params) => {
-                            return h('span',parseFloat(params.row.reward));a
+                            return h('span',parseFloat(params.row.miner.reward));a
                         }
                     }
                 ]
