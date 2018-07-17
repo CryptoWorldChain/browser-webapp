@@ -475,7 +475,7 @@ export default {
     initInterval() {
       setInterval(()=>{
         window.location.reload();
-      },1000*60*3);
+      },1000*60*1);
     },
     sliceStr,
     initCoin () {
