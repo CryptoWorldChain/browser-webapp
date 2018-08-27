@@ -233,7 +233,7 @@ function init() {
     (function() {
       var globe = planetaryjs.planet();
       // Load our custom `autorotate` plugin; see below.
-      globe.loadPlugin(autorotate(10));
+      globe.loadPlugin(autorotate(7));
       // The `earth` plugin draws the oceans and the land; it's actually
       // a combination of several separate built-in plugins.
       //
@@ -475,7 +475,7 @@ export default {
     initInterval() {
       setInterval(()=>{
         window.location.reload();
-      },1000*60*1);
+      },1000*60*3);
     },
     sliceStr,
     initCoin () {
@@ -527,7 +527,7 @@ export default {
             var age = Math.floor((now - block.timestamp)/1000);
             if (age <= 10) {
               block.age = age + 's ago';
-            }else {
+            } else {
               block.age = this.timeago().format(block.timestamp);
             }
             return block;
